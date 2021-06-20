@@ -9,3 +9,5 @@ services:
     environment:
         - "MYSQL_ROOT_PASSWORD=root"
         - "MYSQL_DATABASE=mysitedb"
+    volumes:
+      - ./mysqldata:/var/lib/mysql
