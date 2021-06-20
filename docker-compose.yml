@@ -4,4 +4,8 @@ services:
     build: .
     ports:
         - "8000:8000"
-        
+  django-db:
+    image: "mysql:5.7"
+    environment:
+        - "MYSQL_ROOT_PASSWORD=root"
+        - "MYSQL_DATABASE=mysitedb"
