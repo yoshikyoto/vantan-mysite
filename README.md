@@ -13,3 +13,5 @@ docker-compose up -d django-db
 ```sh
 docker-compose up -d django
 ```
+
+http://localhost:8000/ で、Djangoにアクセスできます。
