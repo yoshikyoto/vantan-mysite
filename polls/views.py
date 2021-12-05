@@ -1,32 +1,27 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, Http404
 from polls.models import Question
-from django.template import loader
+from django.shortcuts import render
 
 
 def index(request: HttpRequest):
     """polls アプリケーションのトップページを表示する"""
-    # latest_question_list は Question オブジェクトの配列になっている
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
 
-    # [q.question_text for q in latest_question_list] → question_text の配列になる
-    output = '<br>'.join([q.question_text for q in latest_question_list])
-
-    # 後置 for を、後置じゃない形式に直した場合
-    a = []
-    for q in latest_question_list:
-        a.append(q.question_text)
-
-    # joinの部分は、 ', '.join(strの配列)　とすると、配列の中身をカンマで結合する
-    a = ["a", "b", "c"]
-    joined = '/'.join(a)
-    # joined = "a/b/c"
-
-    return HttpResponse(output)
+    context = {
+        # template の変数名 : 対応する変数や値
+        'latest_question_list': latest_question_list,
+    }
+    return render(request, 'polls/index.html', context)
 
 
 def detail(request, question_id):
     """question_id に対応する質問の詳細を見る"""
-    return HttpResponse("You're looking at question %s." % question_id)
+    try:
+        # pk : primary key （主キー）の略
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question})
 
 
 def results(request, question_id):
