@@ -128,3 +128,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# この場合は、 ユーザー名が admin パスワードが password になる
+BASICAUTH_USERS = {"admin": "password"}
