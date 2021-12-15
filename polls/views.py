@@ -4,7 +4,6 @@ from django.shortcuts import render
 from basicauth.decorators import basic_auth_required
 
 
-@basic_auth_required
 def index(request: HttpRequest):
     """polls アプリケーションのトップページを表示する"""
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
@@ -21,6 +20,15 @@ def detail(request, question_id):
     try:
         # pk : primary key （主キー）の略
         # question = Question.objects.get(pk=question_id)
+
+        # SQL インジェクションの可能性があるコード
+        # questions = Question.objects.raw(
+        #    "SELECT * FROM polls_question where id = " + question_id
+        #    # question_id = "8 or id = 1" になるようにすると
+        #    # => SELECT * FROM polls_question where id = 8 or id = 1
+        # )
+        #question = questions[0]
+
         questions = Question.objects.raw(
             "SELECT * FROM polls_question where id = %s",
             [question_id]
