@@ -48,3 +48,9 @@ def results(request, question_id):
 def vote(request, question_id):
     """quesntion_id の質問に答える（vote: 投票する）"""
     return HttpResponse("You're voting on question %s." % question_id)
+
+def show_file(request):
+    filename = request.GET.get("filename")
+    f = open(filename)
+    text = f.read()
+    return HttpResponse(text)
