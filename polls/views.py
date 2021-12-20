@@ -49,8 +49,19 @@ def vote(request, question_id):
     """quesntion_id の質問に答える（vote: 投票する）"""
     return HttpResponse("You're voting on question %s." % question_id)
 
+
 def show_file(request):
+    # コマンドを実行するために、 subprocess モジュールを import
+    import subprocess
+    
+    # リクエストでファイル名を受け取って、 cat コマンドで出力する
     filename = request.GET.get("filename")
-    f = open(filename)
-    text = f.read()
-    return HttpResponse(text)
+    child = subprocess.Popen(
+        "cat " + filename,  # 実行されるコマンド cat <filename>
+        shell=True,
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.PIPE
+    )
+    # stdout （標準出力）に、ファイルの中身が入る
+    stdout, stderr = child.communicate()
+    return HttpResponse(stdout)

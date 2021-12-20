@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # ex: /polls/file/
     path('file/', views.show_file, name="show_file"),
 
     # ex: /polls/
