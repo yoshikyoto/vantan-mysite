@@ -1,3 +1,4 @@
 Django==3.2
 mysqlclient==2.0.3
 django-basicauth==0.5.3
+gunicorn==20.1.0
