@@ -7,9 +7,8 @@ services:
     volumes:
       - .:/code
   django-db:
+    platform: linux/x86_64
     image: "mysql:5.7"
     environment:
         - "MYSQL_ROOT_PASSWORD=root"
         - "MYSQL_DATABASE=mysitedb"
-    volumes:
-      - ./mysqldata:/var/lib/mysql
