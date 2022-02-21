@@ -2,6 +2,8 @@ FROM python:3.9-slim-buster
 
 WORKDIR /code
 
+sdfs
+
 RUN apt-get update && \
     apt-get -y install gcc libmariadb-dev
 
